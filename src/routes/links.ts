@@ -36,7 +36,7 @@ linksRouter.post("/api/links", async (req: Request, res: Response) => {
         data: {code: result, longURL: parsedLink.data.url},
     });
 
-    const shortUrl = `${process.env.SHORT_URL}/${link.code}`;
+    const shortUrl = `${process.env.SHORT_URL_BASE}/${link.code}`;
     return res.status(201).json ({ code: link.code, shortUrl });
 });
 
