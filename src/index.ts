@@ -1,9 +1,13 @@
 import express from "express";
+import {pinoHttp} from "pino-http";
 import {linksRouter} from "./routes/links";
 
-const app = express();
 
+const app = express();
 app.use(express.json());
+
+const logger = pinoHttp();
+app.use(logger);
 
 app.get("/healthz", (req, res) => {
   res.json({ status: "ok" });
