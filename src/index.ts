@@ -6,7 +6,20 @@ import {linksRouter} from "./routes/links";
 const app = express();
 app.use(express.json());
 
-const logger = pinoHttp();
+const prod = process.env.NODE_ENV === "production";
+
+const logger = pinoHttp({
+  transport: prod ? undefined : {
+    target: "pino-pretty",
+    options: {
+      colorize: true,
+      singleLine: true,
+      translateTime: "SYS:standard",
+      ignore: "req.headers,res.headers",
+    }
+  }
+})
+
 app.use(logger);
 
 app.get("/healthz", (req, res) => {
